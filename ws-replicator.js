@@ -1,12 +1,11 @@
 const http = require('http')
 const ws = require('websocket-stream')
 const level = require('level')
-const sub = require('subleveldown')
 const hyperlog = require('hyperlog')
 const router = require('./router')
 
 const db = level('./.ws.db')
-const slugs = sub(db, 'slugs', {valueEncoding: 'json'})
+const slugs = level('./.slugs', {valueEncoding: 'json'})
 const log = hyperlog(db, {valueEncoding: 'json'})
 
 const server = http.createServer(router(slugs, log))
