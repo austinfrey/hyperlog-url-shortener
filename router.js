@@ -32,8 +32,10 @@ function submitLongUrl(req, res, match, index, log) {
   }
 
   log.heads((err, heads) => {
+    console.log('HEAD', heads)
     if(err) return console.error(err)
-    log.add((heads[1] || heads), value, async(err, node) => {
+    log.add((heads[0] || heads), value, async(err, node) => {
+      console.log('NODE', node)
       if(err) return console.error(err)
       try {
         await index.put(node.value.shortURL, node.value.longURL)

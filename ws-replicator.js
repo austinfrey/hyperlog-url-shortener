@@ -6,7 +6,7 @@ const hyperlog = require('hyperlog')
 const router = require('./router')
 
 const db = level('./.ws.db')
-const slugs = sub(db, 'slugs')
+const slugs = sub(db, 'slugs', {valueEncoding: 'json'})
 const log = hyperlog(db, {valueEncoding: 'json'})
 
 const server = http.createServer(router(slugs, log))
