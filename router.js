@@ -20,7 +20,6 @@ router.addRoute('POST /shorten', submitLongUrl)
 async function redirect(req, res, match, index) {
   index.get(match.slug, async(err, val) => {
     if(err) return res.end(err)
-    console.log(typeof val)
     try {
       val.hits++
       index.put(match.slug, val)
@@ -35,8 +34,7 @@ async function redirect(req, res, match, index) {
 function getUrlData(req, res, match, index) {
   const urlStream = index.createReadStream()
   urlStream.pipe(through.obj(function(chunk, enc, next) {
-    console.log(chunk)
-    this.push(JSON.stringify(chunk))
+    this.push(JSON.stringify(chunk) + '\n')
     next()
   })).pipe(res)
 }
