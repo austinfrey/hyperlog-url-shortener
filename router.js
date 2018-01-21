@@ -13,21 +13,26 @@ const router = new Router()
 
 router.addRoute('GET /sl/:slug', redirect)
 
-router.addRoute('GET /data', getUrlData)
+router.addRoute('POST /data', getUrlData)
 
 router.addRoute('POST /shorten', submitLongUrl)
 
-async function redirect(req, res, match, index) {
-  index.get(match.slug, async(err, val) => {
+async function redirect(req, res, match, index, log) {
+  index.get(match.slug, (err, val) => {
     if(err) return res.end(err)
-    try {
-      val.hits++
-      index.put(match.slug, val)
+    const value = {
+      slug: match.slug,
+      foreignKey: val.foreignKey,
+      headers: req.headers,
+      url: req.url,
+      method: req.method
+    }
+
+    log.append(value, (err, node) => {
+      if(err) console.error(err)
       res.writeHead(302, { 'Location': val.longURL })
       res.end()
-    } catch(err) {
-      console.error(err)
-    }
+    })
   })
 }
 
@@ -47,25 +52,20 @@ function submitLongUrl(req, res, match, index, log) {
     longURL: query.url
   }
 
-  log.heads((err, heads) => {
+  log.append(value, async(err, node) => {
     if(err) return console.error(err)
-    log.add((heads[0] || heads), value, async(err, node) => {
-      if(err) return console.error(err)
+    const indexVal = {
+      longURL: node.value.longURL,
+      foreignKey: node.key
+    }
 
-      const indexVal = {
-        longURL: node.value.longURL,
-        hits: 0
-      }
-
-      try {
-        await index.put(node.value.shortURL, indexVal)
-        index.get(node.value.shortURL, (err, val) => console.log(err || val))
-        console.log(node)
-        res.end(JSON.stringify(node.value))
-      } catch(err) {
-        console.error(err)
-      }
-    })
+    try {
+      await index.put(node.value.shortURL, indexVal)
+      console.log(node)
+      res.end(JSON.stringify(node.value))
+    } catch(err) {
+      console.error(err)
+    }
   })
 }
 
