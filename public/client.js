@@ -23,7 +23,7 @@ $('form').submit(event => {
        $('input').focus()
        return
      }
-     const url = JSON.parse(urlJSON).shortURL
+     const url = JSON.parse(urlJSON).slug
      $('p#url').text(url)
      $('input').val('')
      $('input').focus()

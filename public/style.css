@@ -22,6 +22,14 @@ h1 {
   font-weight: bold;
 }
 
+.get {
+  color: green;
+}
+
+.slug {
+  color: pink;
+}
+
 p {
   max-width: 600px;
 }
@@ -68,16 +76,18 @@ li {
   margin-bottom: 5px;
 }
 
-footer {
-  margin-top: 50px;
-  padding-top: 25px;
-  border-top: 1px solid lightgrey;
-}
-
-footer > a {
-  color: #BBBBBB;
-}
 
 .nicejob {
   text-decoration: line-through;
+}
+
+.column {
+    float: left;
+    width: 50%;
+}
+
+@media (max-width: 600px) {
+    .column {
+        width: 100%;
+    }
 }

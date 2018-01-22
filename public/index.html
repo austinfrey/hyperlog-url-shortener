@@ -26,25 +26,27 @@
     </header>
 
     <main>
-      <p class="bold">Howdy,</p>
-      <p>Tell me your EARL to chop using the example below:</p>
-      <form>
-        <text>https://www.google.com*</text>
-        <input type="url" pattern="https?://.+" required maxlength="2000" placeholder="Enter Earl to chop">
-        <button>Submit</button>
-        <p>* <strong>http</strong> or <strong>https</strong> required</p>
-      </form>
-      <section class="url">
-        <p id="url">
-        </p>
-        <button onclick="copy()">Copy URL</button>
-      </section>
+      <div class="column">
+        <p class="bold">Howdy,</p>
+        <p>Tell me your EARL to chop using the example below:</p>
+        <form>
+          <text>https://www.google.com*</text>
+          <input type="url" pattern="https?://.+" required maxlength="2000" placeholder="Enter Earl to chop">
+          <button>Submit</button>
+          <p>* <strong>http</strong> or <strong>https</strong> required</p>
+        </form>
+        <section class="url">
+          <p id="url">
+          </p>
+          <button onclick="copy()">Copy URL</button>
+        </section>
+      </div>
+      <div class="column">
+        <p class="bold">Activity Log</p>
+        <div id="hyperlog">
+        </div>
+      </div>
     </main>
-    <div id="hyperlog">
-    </div>
-    <footer>
-      <p>zi.gy</p>
-    </footer>
 
     <!-- Your web-app is https, so your scripts need to be too -->
     <script src="https://code.jquery.com/jquery-2.2.1.min.js"

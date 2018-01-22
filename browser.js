@@ -19,8 +19,16 @@ changesFeed.on('data', node => {
 })
 
 function showNode(node) {
+  if(node.value.method) {
+    return html`
+      <p><span class="get bold">/${node.value.method}</span> ${node.value.url}</p>
+    `
+  }
   return html`
-   <p>${JSON.stringify(node) + '\n'}</p>
+    <p>
+      <span class="slug bold">SLUG</span> ${node.value.slug}
+      <span class="slug bold">URL</span> ${node.value.longURL}
+    </p>
   `
 }
 

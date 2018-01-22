@@ -48,7 +48,7 @@ function submitLongUrl(req, res, match, index, log) {
   const query = qs.parse(req.url.split('?')[1])
   const value = {
     cuid: cuid(),
-    shortURL: cuid.slug(),
+    slug: cuid.slug(),
     longURL: query.url
   }
 
@@ -60,7 +60,7 @@ function submitLongUrl(req, res, match, index, log) {
     }
 
     try {
-      await index.put(node.value.shortURL, indexVal)
+      await index.put(node.value.slug, indexVal)
       console.log(node)
       res.end(JSON.stringify(node.value))
     } catch(err) {
